@@ -1,0 +1,18 @@
+--- 
+:bucket: MyDemo_Input
+:inputqueue: MyDemo_Input
+:outputqueue: MyDemo_Output
+:auditqueue: MyDemo_Audit
+:errorqueue: MyDemo_Error
+:task_dispatch_list: dispatched.yml
+:task_processed_list: processed.yml
+:r_function: ff
+:r_preamble: 
+:r_postprocess: 
+:access_key_id: AKIAIC6KBOXLILI5ZPXA
+:secret_access_key: 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
+:uploadedFile: 
+- in/14242_data_Wed-Dec-22-20:33:30-2010
+:codeFile: 
+- in/14242_function.file.Wed-Dec-22-20:33:30-2010
+:segment_count: 0

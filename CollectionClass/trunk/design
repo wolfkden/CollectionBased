@@ -1,0 +1,18 @@
+Library Requirements
+- transfer data between AWS S3 and local R client environment
+- database interface
+  -- yaml files
+- R Collection Class
+- map function (apply arbitrary function to collection)
+  -- select
+  -- generate data
+
+YAML Database
+- config.yml - local client
+- configs.yml - s3 
+- jobspecs.yml - s3
+- collections.yml - s3
+- dispatched.yml - s3
+- processed.yml - s3
+- audit.yml - s3
+

@@ -1,0 +1,28 @@
+# The daemon reads this file on startup.
+# Changing this file on a running instance will not change the
+# behavior of the Daemon
+# You must change the bootscript that generates this file
+development:
+ RightWorkersDaemon:
+  aws_access_key: 13S7FBHHBMRXVVHF2MG2
+  aws_secret_access_key: 9XBkVFl4XjZoIT2O76/hCtFxu1u37+kCr6ISaVDK
+  log: WorkDaemon_RGKicker.log
+  halt_on_exit: true
+  workers: 1
+  user:
+    s3_out: MyDemo_Input/out
+  queues:
+    MyDemo_Input:
+      result_queue: MyDemo_Output
+      audit_queue: MyDemo_Audit
+      error_queue: MyDemo_Error
+      message_decoder: RightYamlDecoder
+      s3_log: MyDemo_Input/log/%{DATE}/%{TIME}-%{MESSAGE_ID}
+      s3_out: MyDemo_Input/out/%{MESSAGE_ID}
+      receive_message_timeout: 180
+      default_worker_name: RGKicker
+      life_time_after_fault: 240
+      s3_in: /tmp/s3_in
+      s3_in_delete: false
+      s3_in_overwrite: false
+      s3_in_flat: true

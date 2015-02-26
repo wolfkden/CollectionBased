@@ -1,0 +1,66 @@
+yum -y update
+echo "/usr/local/lib">>/etc/ld.so.conf
+ldconfig
+yum groupinstall 'Development Tools'
+#yum groupinstall 'Fedora Packager'
+rpm -Uvh http://pptpclient.sourceforge.net/yum/stable/fc14/pptp-release-current.noarch.rpm
+rpm -Uvh http://packages.sw.be/rpmforge-release/rpmforge-release-0.5.2-2.el5.rf.x86_64.rpm
+# disable yum repos in the directory: /etc/yum.repos.d
+yum -y install python-setuptools
+yum -y install zlib-devel openssl-devel expat-devel xml2 libxml libxml2-devel libcurl-devel mhash-devel expat-devel xinetd gettext-devel python-devel perl-devel ruby-devel icu libicu-devel ncurses-devel sqlite-devel pcre-devel
+yum -y install cyrus-sasl-devel
+yum -y install wxGTK-devel mesa-libGL-devel mesa-libGLU-devel mesa-libGLw-devel mesa-libOSMesa-devel mesa-source
+yum install erlang erlang-hipe
+yum install json-c-devel js-devel
+easy_install pyicu
+cd /opt
+#git clone https://github.com/erlang/otp.git
+#cd otp
+#export ERL_TOP=`pwd`
+#./otp_build autoconf
+#./configure
+#make
+#./bin/erl
+#make install
+
+#couchdb
+cd /opt
+git clone https://github.com/apache/couchdb.git
+cd couchdb
+./bootstrap
+./configure -with-erlang=/usr/lib64/erlang/usr/include
+make && make install
+mkdir -p /usr/local/var/lib/couchdb \
+ 	 /usr/local/var/log/couchdb \
+	 /usr/local/var/run/couchdb
+adduser -r -d /usr/local/var/lib/couchdb couchdb
+chown -R couchdb /usr/local/var/lib/couchdb
+chown -R couchdb /usr/local/var/log/couchdb
+chown -R couchdb /usr/local/var/run/couchdb
+touch /usr/local/etc/couchdb/local.ini
+#sudo -u couchdb ./couchdb
+ls /usr/local/etc/rc.d/couchdb
+/usr/local/etc/rc.d/couchdb start
+
+#couchdb-lounge
+easy_install twisted
+git clone https://github.com/tilgovi/couchdb-lounge.git
+cd couchdb-lounge
+#no patch needed for couchdb 1.2
+#dumbproxy require PCRE for nginx compile
+cd dumbproxy
+./configure
+make
+sudo make install
+cd ../python-lounge
+python setup.py install
+cd ../smartproxy
+make
+sudo make install
+cd ..
+echo "[update_notification]
+replicator = /usr/bin/python /var/lib/lounge/replication_notifier.py">>/usr/local/etc/couchdb/default.ini
+mkdir /var/lounge
+mkdir /var/lounge/etc
+/etc/init.d/nginx-lounge start
+

@@ -1,0 +1,35 @@
+# Logfile created on Sat Dec 04 23:59:17 +0000 2010 by logger.rb/1.5.2.9
+I, [2010-12-04T23:59:17.108054 #1821]  INFO -- : RightWorkersDaemon : ****************************************
+I, [2010-12-04T23:59:17.108270 #1821]  INFO -- : RightWorkersDaemon : RightGrid 1.3.0 starting....
+I, [2010-12-04T23:59:17.109032 #1821]  INFO -- : RightWorkersDaemon :  - Found and loaded /usr/lib/ruby/gems/1.8/gems/right_grid-1.3.0/script/../lib/codecs/right_yaml_decoder.rb
+I, [2010-12-04T23:59:17.638321 #1821]  INFO -- : RightWorkersDaemon : --- Ec2 metadata loaded
+I, [2010-12-04T23:59:17.638580 #1821]  INFO -- : RightWorkersDaemon : --- Ec2 userdata loaded
+I, [2010-12-04T23:59:17.638737 #1821]  INFO -- : RightWorkersDaemon : New RightAws::SqsGen2Interface using shared connections mode
+I, [2010-12-04T23:59:17.638839 #1821]  INFO -- : RightWorkersDaemon : --- Parsing queue parameters: ---
+I, [2010-12-04T23:59:17.639645 #1821]  INFO -- : RightWorkersDaemon : Opening new HTTPS connection to queue.amazonaws.com:443
+I, [2010-12-04T23:59:18.138994 #1821]  INFO -- : RightWorkersDaemon : >- MyDemo_Input
+I, [2010-12-04T23:59:18.139149 #1821]  INFO -- : RightWorkersDaemon :  - Task queue url:        https://queue.amazonaws.com/409856118832/MyDemo_Input
+I, [2010-12-04T23:59:18.139246 #1821]  INFO -- : RightWorkersDaemon :  - Result server url:     -undefined-
+I, [2010-12-04T23:59:18.139346 #1821]  INFO -- : RightWorkersDaemon :  - Result queue url:      https://queue.amazonaws.com/409856118832/MyDemo_Output
+I, [2010-12-04T23:59:18.139435 #1821]  INFO -- : RightWorkersDaemon :  - Error queue url:       https://queue.amazonaws.com/409856118832/MyDemo_Error
+I, [2010-12-04T23:59:18.139523 #1821]  INFO -- : RightWorkersDaemon :  - Audit queue url:       https://queue.amazonaws.com/409856118832/MyDemo_Audit
+I, [2010-12-04T23:59:18.139610 #1821]  INFO -- : RightWorkersDaemon :  - Invocation Model:      
+I, [2010-12-04T23:59:18.139707 #1821]  INFO -- : RightWorkersDaemon :  - S3 log path:           MyDemo_Input/log/%{DATE}/%{TIME}-%{MESSAGE_ID}
+I, [2010-12-04T23:59:18.139802 #1821]  INFO -- : RightWorkersDaemon :  - S3 out path:           MyDemo_Input/out/%{MESSAGE_ID}
+I, [2010-12-04T23:59:18.139897 #1821]  INFO -- : RightWorkersDaemon :  - S3 in path:            /tmp/s3_in
+I, [2010-12-04T23:59:18.139986 #1821]  INFO -- : RightWorkersDaemon :  - S3 in flat:            true
+I, [2010-12-04T23:59:18.140075 #1821]  INFO -- : RightWorkersDaemon :  - Overwrite on download: false
+I, [2010-12-04T23:59:18.140163 #1821]  INFO -- : RightWorkersDaemon :  - Remove downloaded:     false
+I, [2010-12-04T23:59:18.140253 #1821]  INFO -- : RightWorkersDaemon :  - Message decoder:       RightYamlDecoder
+I, [2010-12-04T23:59:18.140345 #1821]  INFO -- : RightWorkersDaemon :  - Message timeout:       180
+I, [2010-12-04T23:59:18.140431 #1821]  INFO -- : RightWorkersDaemon :  - Publish AWS keys to app:       false
+I, [2010-12-04T23:59:18.140519 #1821]  INFO -- : RightWorkersDaemon :  - Message lifetime after fault:  240
+I, [2010-12-04T23:59:18.140607 #1821]  INFO -- : RightWorkersDaemon :  - Result server: skip errors:    nil
+I, [2010-12-04T23:59:18.140694 #1821]  INFO -- : RightWorkersDaemon :  - Result queue:  skip errors:    nil
+I, [2010-12-04T23:59:18.140786 #1821]  INFO -- : RightWorkersDaemon :  - Default worker name:   RGKicker
+I, [2010-12-04T23:59:18.140872 #1821]  INFO -- : RightWorkersDaemon : --- Parsing complete; queues initialized. ---
+I, [2010-12-04T23:59:18.141001 #1821]  INFO -- : RightWorkersDaemon : [1] : Establishing AWS SQS connection
+I, [2010-12-04T23:59:18.141135 #1821]  INFO -- : RightWorkersDaemon : [1] : New RightAws::SqsGen2Interface using shared connections mode
+I, [2010-12-04T23:59:18.141227 #1821]  INFO -- : RightWorkersDaemon : [1] : Establishing AWS S3 connection
+I, [2010-12-04T23:59:18.141360 #1821]  INFO -- : RightWorkersDaemon : [1] : New RightAws::S3Interface using shared connections mode
+I, [2010-12-04T23:59:18.141469 #1821]  INFO -- : RightWorkersDaemon : [1] : Initialization completed. Waiting for messages...

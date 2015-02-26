@@ -1,0 +1,56 @@
+Collection Project Documentation
+
+The Docomo collection project employs RightScale RightGrid services which are a wrapper service for the Amazon Web Services elastic SQS grid. Fundamentally RightScale provides a Ruby Gems libraray, 'right_aws', that wraps AWS services for access and management.
+
+The general architecture of the collection project consists of a client and an elastic queued worker service grid. The collection project has published CentOS linux scripts at RightScale for the proper setup and deployment of a client and grid workers. Clients and workers require installation of the recent version of Ruby > 1.8.7, Ruby Gems 1.3.1 and R > 2.0.. Clients may be windows or linux systems external or internal to RightGrid. Workers require CentOS i386 installations or x86_64 for higher precision computational requirements. CentOS i386 is prefered for cost and reduced deployment complexity for typical requirements.
+
+The service component of the collection project consists of an AWS SQS grid array which elastically manages the creation and destuction of worker servers as the load requires. Presently the elastic array has a minimum bound of one worker server and a maximum bound of 20. The collection project maintains a maximum limit of 20 workers since Docomo presently maintains a contract with RightScale that limits the overall total number of servers simultaneously operating to be 50 for all of its projects including the collection project. Elastically each worker can be assigned no more than 10 tasks in a queue before another worker server is instanced to support queue processing; the collection project may change this figure for performance tuning purposes. Hence the collection project configuration can support up to 200 tasks in a queue without loading workers beyond the 10 task soft limit.
+
+The primary proprietary component of the collection worker consists of extensions to the RightGrid yaml message format and ruby code for interpreting messages and processing data with R functions. The yaml message format provides file uri locations and textual strings for parameter and control definitions. File uri's are typically local since grid array services transfer data between local worker servers and the AWS S3 storage. The collection project will change this implementation in the future to improve performance. Presently both data and R functions are communicated between client and worker with files loaded into the R environment having uri designations communicated through messages.
+
+The following are collection extensions to the worker yaml message 
+
+  r_function - an R function script communicated to the worker
+  r_preamble - R initialization scripts for the worker R session
+  r_postprocess - R postprocessing scripts for additional collection processing or new collection initialization to report back to the client.
+
+  s3_download_list - a list of uploaded from S3 to the worker. As a convention, collection files designated with _data in the URI denote data files and collection files designated with _function denote R function definition files.
+
+The collection project uses a standard RightGrid "odir" and output path variable to communicate an output data file to the RightGrid.
+
+Collection project worker Ruby code:
+
+  RGKicker.rb
+
+The collection project supports an extensive library for the client to communicate between the R environments of the client and the grid worker array. The collection library consists of R functions, Ruby scripts, Ruby classes and yaml configuration and task list files.
+
+R functions - files residing in the Collection/rightgrid/r_functions directory
+  function.file.loader - enables the loading of functions with a simple designation such as loader("map")
+  function.file.map - the map function:
+    <output collection><-map(<collection function>, <input collection>)
+  function.file.generate - generates an ascending array with increment 1 of integers, depends on map function for implementation
+    <output collection><-generate(<array size>)
+
+All ruby code requires the right_aws library
+Ruby script - files residing in the Collection/rightgrid directory
+  job_mapper.rb - script that executes the jobDispatcher and jobCollector classes to dispatch tasks to worker queues of the grid and collect data
+  loadFilesS3.rb - loads files for data and R functions from the client to the S3 storage
+
+Ruby classes - files residing in the Collection/rightgrid directory
+  job_dispatcher.rb - disptaches data and function assignments to TaskDispatcher
+  task_dispatcher.rb - partitions and assigns S3 data and tasks to the grid with input queue yaml messages. Stores an array dispatched task yaml messages in the dispatched.yml file
+  job_collector.rb - reads the dispatched task yaml file to read output, error and audit queue messages to write output data files to client disk and account for success or failure of input tasks
+  aggregate_results.rb - reads the processed.yml file to gather output data results and aggregate into a single file for import to the collection R environment
+  job_spec.rb - wraps the jobspec.yml configuration file to policy reading and writing to the jobspec.yml
+
+YAML Files - files residing in the Collection/rightgrid directory
+  jobspec.yml - client configuration file
+  dispatched.yml - a file containing the yaml array of dispatched task messages
+  processed.yml - a file containing the processesed output queue messages, used as an input to the aggregate_results.rb program
+
+rightgrid directories:
+  Collection/rightgrid/output - output files downloaded from S3 files as designated in output queue messages
+  Collection/rightgrid/r_functions - functions imported into the R environment for collection library execution
+  Collection/rightgrid - the rightgrid client base directory for ruby code, yaml files and input data to export from the R environment to S3 for processing
+  Collection/rightworker - ruby worker code - RGKicker.rb 
+ Collection - base of the collection library. This contains the rightgrid.tar.gz gzipped backup used to configure RightScale collection clients

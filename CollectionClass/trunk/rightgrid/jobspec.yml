@@ -1,0 +1,11 @@
+:bucket: Collection
+:bucket_base: Collection_Base
+:inputqueue: MyDemo_Input
+:outputqueue: MyDemo_Output
+:auditqueue: MyDemo_Audit
+:errorqueue: MyDemo_Error
+:task_dispatch_list: dispatched.yml
+:task_processed_list: processed.yml
+:access_key_id: AKIAIIKWKEERTNARISFA
+:secret_access_key: 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
+
